@@ -5,17 +5,19 @@ import {
   protractor,
   ElementFinder,
   ExpectedConditions,
-  ElementArrayFinder
+  ElementArrayFinder,
+  promise
 } from "protractor";
 
 export class TextBox {
   /**
    * setTextValue
    */
-  public setTextValue(locator: ElementFinder, data: string) {
-    if (locator != null) {
+  async setTextValue(locator: ElementFinder, data: string) {
+    if ((await locator) != null) {
       browser.wait(ExpectedConditions.presenceOf(locator), 20000);
       locator.clear();
+      locator.sendKeys("");
       locator.sendKeys(data);
     } else throw new Error("Element not Present Exception");
   }
@@ -23,15 +25,17 @@ export class TextBox {
   /**
    * getTextValue
    */
-  public getTextValue(locator: ElementFinder) {
-    let data: any = null;
-    if (locator != null) {
+  async getTextValue(locator: ElementFinder) {
+    let data: any = "";
+    if ((await locator) != null) {
       browser.wait(ExpectedConditions.presenceOf(locator), 20000);
+      //data = await locator.getText();
       locator.getText().then(function(text) {
         data = text;
-        console.log(data);
       });
-    } else throw new Error("Element not Visiable Exception");
+    } else {
+      throw new Error("Element not Visiable Exception");
+    }
     return data;
   }
 

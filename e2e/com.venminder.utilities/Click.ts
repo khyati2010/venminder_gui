@@ -11,10 +11,12 @@ export class Click {
   /**
    * Click
    */
-  public buttonClick(locator: ElementFinder) {
-    if (locator != null) {
+  async buttonClick(locator: ElementFinder) {
+    if ((await locator) != null) {
+      if(locator.isEnabled()){
       browser.wait(ExpectedConditions.elementToBeClickable(locator), 20000);
-      locator.click();
+      await locator.submit();
+    }
     } else {
       throw new Error("Element not Clickable Exception");
     }

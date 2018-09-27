@@ -7,7 +7,7 @@ exports.config = {
 
     allScriptsTimeout: 360000,
     specs: [
-        './e2e/tests/*.ts'
+        './e2e/com.venminder.specs/*.ts'
     ],
 
     exclude: [],
